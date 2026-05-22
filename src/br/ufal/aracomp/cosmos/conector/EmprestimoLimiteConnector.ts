@@ -8,7 +8,11 @@ export class EmprestimoLimiteConnector implements ILimiteReq {
 
   public estimarLimite(usuario: DTUsuario): number {
     const renda = Number.parseFloat(usuario.rendimentos().replace(/,/g, "."));
-    const cliente = new DTCliente(Number.isNaN(renda) ? 0 : renda);
-    return this.limiteOps.calcularLimite(cliente);
+    const rendaFormatada = Number.isNaN(renda) ? 0 : renda;
+    const cliente = new DTCliente(rendaFormatada);
+
+    const valor1 = this.limiteOps.calcularLimite(cliente);
+
+    return valor1;
   }
 }
