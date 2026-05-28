@@ -5,7 +5,8 @@
   "scripts": {
     "proto:gen": "protoc -I=src/proto --ts_out=src/proto --ts_opt=target=node src/proto/limites.proto",
     "build": "pnpm proto:gen && tsc -p tsconfig.json",
-    "start": "node dist/index.js",
+    "start:client": "node dist/index.js",
+    "start:server": "node dist/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write"
