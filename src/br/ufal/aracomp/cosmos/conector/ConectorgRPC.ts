@@ -1,9 +1,8 @@
 import * as grpc from "@grpc/grpc-js";
-import * as protoLoader from "@grpc/proto-loader";
-import path from "node:path";
 import deasync from "deasync";
 import { DTUsuario } from "../emprestimo/spec/dt/DTUsuario";
 import { ILimiteReq } from "../emprestimo/spec/req/ILimiteReq";
+import { limites } from "../../../../../proto/limites";
 
 class ConfiabilityError extends Error {
   constructor(message: string) {
@@ -17,20 +16,10 @@ function diferencaPercentual(a: number, b: number) {
 }
 
 export class ConectorgRPC implements ILimiteReq {
-  private client: any;
+  private client: limites.LimiteServiceClient;
 
   public constructor(private readonly servidorTarget: string = "localhost:50051") {
-    const PROTO_PATH = path.resolve(process.cwd(), "src/proto/limites.proto");
-    const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
-      keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true,
-    });
-    const limitesProto = grpc.loadPackageDefinition(packageDefinition) as any;
-
-    this.client = new limitesProto.limites.LimiteService(
+    this.client = new limites.LimiteServiceClient(
       this.servidorTarget,
       grpc.credentials.createInsecure(),
     );
@@ -42,22 +31,29 @@ export class ConectorgRPC implements ILimiteReq {
     const renda = Number.parseFloat(usuario.rendimentos().replace(/,/g, "."));
     const rendaFormatada = Number.isNaN(renda) ? 0 : renda;
 
-    let rpcResponse: any = null;
-    let rpcError: any = null;
+    let rpcResponse: limites.LimiteResponse | undefined;
+    let rpcError: grpc.ServiceError | null = null;
     let done = false;
 
     // chamadas gRPC são assincronas, mas a interface ILimiteReq exige uma resposta sincrona, então usamos deasync para "esperar" a resposta do gRPC
-    this.client.CalcularTodosLimites({ renda: rendaFormatada }, (error: any, response: any) => {
-      rpcError = error;
-      rpcResponse = response;
-      done = true;
-    });
+    this.client.CalcularTodosLimites(
+      new limites.LimiteRequest({ renda: rendaFormatada }),
+      (error, response) => {
+        rpcError = error;
+        rpcResponse = response;
+        done = true;
+      },
+    );
 
     deasync.loopWhile(() => !done);
 
     if (rpcError) {
       console.error("[Cliente gRPC] Erro de rede na chamada RPC:", rpcError);
       throw new ConfiabilityError("Falha de comunicação com o Servidor.");
+    }
+
+    if (!rpcResponse) {
+      throw new ConfiabilityError("Resposta inválida do servidor gRPC.");
     }
 
     const { valor1, valor2, valor3 } = rpcResponse;

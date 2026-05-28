@@ -29,6 +29,8 @@ module.exports = [
           argsIgnorePattern: "^_",
         },
       ],
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
 ];
