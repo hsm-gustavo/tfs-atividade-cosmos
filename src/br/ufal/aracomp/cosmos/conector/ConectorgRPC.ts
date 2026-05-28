@@ -20,7 +20,7 @@ export class ConectorgRPC implements ILimiteReq {
   private client: any;
 
   public constructor(private readonly servidorTarget: string = "localhost:50051") {
-    const PROTO_PATH = path.resolve(__dirname, "../../../../proto/limites.proto");
+    const PROTO_PATH = path.resolve(process.cwd(), "src/proto/limites.proto");
     const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
       keepCase: true,
       longs: String,

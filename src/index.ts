@@ -1,13 +1,6 @@
 import { ComponentFactoryEmprestimo } from "./br/ufal/aracomp/cosmos/emprestimo/impl/ComponentFactoryEmprestimo";
 import { DTUsuario } from "./br/ufal/aracomp/cosmos/emprestimo/spec/dt/DTUsuario";
 import { IEmprestimoOps } from "./br/ufal/aracomp/cosmos/emprestimo/spec/prov/IEmprestimoOps";
-import { ComponentFactoryLimite } from "./br/ufal/aracomp/cosmos/limite/impl/ComponentFactoryLimite";
-import { ILimiteOps } from "./br/ufal/aracomp/cosmos/limite/spec/prov/ILimiteOps";
-import { ComponentFactoryLimite2 } from "./br/ufal/aracomp/cosmos/limite2/impl/ComponentFactoryLimite2";
-import { ComponentFactoryLimite3 } from "./br/ufal/aracomp/cosmos/limite3/impl/ComponentFactoryLimite3";
-import { ILimiteOps2 } from "./br/ufal/aracomp/cosmos/limite2/spec/prov/ILimiteOps2";
-import { ILimiteOps3 } from "./br/ufal/aracomp/cosmos/limite3/spec/prov/ILimiteOps3";
-import { ConectorTolerante } from "./br/ufal/aracomp/cosmos/conector/ConectorTolerante";
 import { ConectorgRPC } from "./br/ufal/aracomp/cosmos/conector/ConectorgRPC";
 
 function configurarArquitetura(): IEmprestimoOps {
