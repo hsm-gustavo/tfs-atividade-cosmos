@@ -32,7 +32,7 @@ export class ConectorgRPC implements ILimiteReq {
 
     this.client = new limitesProto.limites.LimiteService(
       this.servidorTarget,
-      grpc.ServerCredentials.createInsecure(),
+      grpc.credentials.createInsecure(),
     );
   }
 

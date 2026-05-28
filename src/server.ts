@@ -70,7 +70,7 @@ function main() {
       console.error("Erro ao iniciar o servidor gRPC:", err);
       return;
     }
-    console.log(`[Servidor] gRPC Server a correr em ${ADDR}`);
+    console.log(`[Servidor gRPC] Servidor rodando em ${ADDR}`);
   });
 }
 
