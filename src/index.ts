@@ -8,34 +8,20 @@ import { ComponentFactoryLimite3 } from "./br/ufal/aracomp/cosmos/limite3/impl/C
 import { ILimiteOps2 } from "./br/ufal/aracomp/cosmos/limite2/spec/prov/ILimiteOps2";
 import { ILimiteOps3 } from "./br/ufal/aracomp/cosmos/limite3/spec/prov/ILimiteOps3";
 import { ConectorTolerante } from "./br/ufal/aracomp/cosmos/conector/ConectorTolerante";
+import { ConectorgRPC } from "./br/ufal/aracomp/cosmos/conector/ConectorgRPC";
 
 function configurarArquitetura(): IEmprestimoOps {
-  const componenteLimiteMgr = ComponentFactoryLimite.createInstance();
   const componenteEmprestimoMgr = ComponentFactoryEmprestimo.createInstance();
 
-  const componenteLimite2Mgr = ComponentFactoryLimite2.createInstance();
-  const componenteLimite3Mgr = ComponentFactoryLimite3.createInstance();
-
-  const limiteOps = componenteLimiteMgr.getProvidedInterface("ILimiteOps") as
-    | ILimiteOps
-    | undefined;
   const emprestimoOps = componenteEmprestimoMgr.getProvidedInterface("IEmprestimoOps") as
     | IEmprestimoOps
     | undefined;
 
-  const limiteOps2 = componenteLimite2Mgr.getProvidedInterface("ILimiteOps2") as
-    | ILimiteOps2
-    | undefined;
-
-  const limiteOps3 = componenteLimite3Mgr.getProvidedInterface("ILimiteOps3") as
-    | ILimiteOps3
-    | undefined;
-
-  if (!limiteOps || !limiteOps2 || !limiteOps3 || !emprestimoOps) {
-    throw new Error("Falha ao obter interfaces providas dos componentes.");
+  if (!emprestimoOps) {
+    throw new Error("Falha ao obter interface provida do componente.");
   }
 
-  const conector = new ConectorTolerante(limiteOps, limiteOps2, limiteOps3);
+  const conector = new ConectorgRPC("localhost:50051");
   componenteEmprestimoMgr.setRequiredInterface("ILimiteReq", conector);
 
   return emprestimoOps;

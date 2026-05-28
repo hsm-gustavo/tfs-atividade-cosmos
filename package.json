@@ -11,10 +11,17 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/deasync": "^0.1.5",
+    "@types/node": "^25.9.1",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.3",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.59.4"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.4",
+    "@grpc/proto-loader": "^0.8.1",
+    "deasync": "^0.1.31"
   }
 }

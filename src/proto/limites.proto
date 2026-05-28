@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package limites;
+
+service LimiteService {
+  rpc CalcularTodosLimites (LimiteRequest) returns (LimiteResponse);
+}
+
+message LimiteRequest {
+  double renda = 1;
+}
+
+message LimiteResponse {
+  double valor1 = 1;
+  double valor2 = 2;
+  double valor3 = 3;
+}
