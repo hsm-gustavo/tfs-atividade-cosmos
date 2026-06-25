@@ -1,7 +1,7 @@
+import { ConectorgRPCCarga } from "./br/ufal/aracomp/cosmos/conector/ConectorgRPCCarga";
 import { ComponentFactoryEmprestimo } from "./br/ufal/aracomp/cosmos/emprestimo/impl/ComponentFactoryEmprestimo";
 import { DTUsuario } from "./br/ufal/aracomp/cosmos/emprestimo/spec/dt/DTUsuario";
 import { IEmprestimoOps } from "./br/ufal/aracomp/cosmos/emprestimo/spec/prov/IEmprestimoOps";
-import { ConectorgRPC } from "./br/ufal/aracomp/cosmos/conector/ConectorgRPC";
 
 function configurarArquitetura(): IEmprestimoOps {
   const componenteEmprestimoMgr = ComponentFactoryEmprestimo.createInstance();
@@ -14,7 +14,7 @@ function configurarArquitetura(): IEmprestimoOps {
     throw new Error("Falha ao obter interface provida do componente.");
   }
 
-  const conector = new ConectorgRPC("localhost:50051");
+  const conector = new ConectorgRPCCarga();
   componenteEmprestimoMgr.setRequiredInterface("ILimiteReq", conector);
 
   return emprestimoOps;

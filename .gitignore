@@ -2,3 +2,4 @@ java
 dist
 node_modules
 *.pdf
+estado.txt

@@ -43,7 +43,7 @@ class LimiteService extends limites.UnimplementedLimiteServiceService {
     const valor2 = limiteOps2Ok.calcularLimite(new DTCliente2(rendaFormatada));
     const valor3 = limiteOps3Ok.calcularLimite(new DTCliente3(rendaFormatada));
 
-    console.log(`[Servidor gRPC 1] Limites calculados para renda ${rendaFormatada}:`, {
+    console.log(`[Servidor gRPC 3] Limites calculados para renda ${rendaFormatada}:`, {
       valor1,
       valor2,
       valor3,
@@ -57,13 +57,13 @@ function main() {
   const server = new grpc.Server();
   server.addService(LimiteService.definition, new LimiteService());
 
-  const ADDR = "0.0.0.0:50049";
+  const ADDR = "0.0.0.0:50051";
   server.bindAsync(ADDR, grpc.ServerCredentials.createInsecure(), (err, _) => {
     if (err) {
-      console.error("Erro ao iniciar o servidor gRPC 1:", err);
+      console.error("Erro ao iniciar o servidor gRPC 3:", err);
       return;
     }
-    console.log(`[Servidor gRPC 1] Servidor 1 rodando em ${ADDR}`);
+    console.log(`[Servidor gRPC 3] Servidor 3 rodando em ${ADDR}`);
   });
 }
 
